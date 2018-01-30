@@ -14,9 +14,22 @@ class Product
     end
   end
 
+  def save
+    return false if !valid?
+    'OK' == $redis.mapped_hmset(self.id, { price: self.price, currency: self.currency } )
+  end
+
+  def exists?
+    $redis.exists(self.id)
+  end
+
+  def destroy
+    1 == $redis.del(self.id)
+  end
+
   private
 
   def validate_currency
-    errors.add(:currency, 'type is unsupported') if !Money::Currency.find(@currency)
+    errors.add(:currency, 'type is unsupported') if !Money::Currency.find(self.currency)
   end
 end
