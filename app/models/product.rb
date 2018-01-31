@@ -20,12 +20,12 @@ class Product
     'OK' == $redis.mapped_hmset(redis_key, { price: self.price, currency: self.currency } )
   end
 
-  def exists?
-    $redis.exists(redis_key)
-  end
-
   def destroy
     1 == $redis.del(redis_key)
+  end
+
+  def self.exists?(id)
+    $redis.exists(generate_redis_key(id))
   end
 
   def self.find(id)

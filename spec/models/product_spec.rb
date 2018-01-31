@@ -83,17 +83,6 @@ RSpec.describe Product do
     end
   end
 
-  describe '#exists?' do
-    it 'returns false when no record exists' do
-      expect(build(:product).exists?).to be false
-    end
-
-    it 'returns true when record exists' do
-      $redis.set(Product.generate_redis_key(1), "")
-      expect(build(:product, id: 1).exists?).to be true
-    end
-  end
-
   describe '#destroy' do
     context 'when record exists' do
       it 'deletes record and returns true' do
@@ -110,6 +99,18 @@ RSpec.describe Product do
         expect{ destroy_result = build(:product).destroy }.to_not change{ $redis_raw.dbsize }
         expect(destroy_result).to be false
       end
+    end
+  end
+
+
+  describe '.exists?' do
+    it 'returns false when no record exists' do
+      expect(Product.exists?(1)).to be false
+    end
+
+    it 'returns true when record exists' do
+      $redis.set(Product.generate_redis_key(1), "")
+      expect(Product.exists?(1)).to be true
     end
   end
 
