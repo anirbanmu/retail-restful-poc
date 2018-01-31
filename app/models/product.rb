@@ -17,7 +17,7 @@ class Product
 
   def save
     return false if !valid?
-    'OK' == $redis.mapped_hmset(redis_key, { price: self.price, currency: self.currency } )
+    save_core
   end
 
   def destroy
@@ -35,6 +35,10 @@ class Product
   end
 
   private
+
+  def save_core
+    'OK' == $redis.mapped_hmset(redis_key, { price: self.price, currency: self.currency } )
+  end
 
   def redis_key
     @redis_key ||= self.class.generate_redis_key(self.id)
