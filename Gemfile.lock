@@ -73,7 +73,7 @@ GEM
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     puma (3.11.2)
-    rack (2.0.3)
+    rack (2.0.4)
     rack-test (0.8.2)
       rack (>= 1.0, < 3)
     rails (5.1.4)
@@ -160,9 +160,6 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
-
-RUBY VERSION
-   ruby 2.3.3p222
 
 BUNDLED WITH
    1.16.1
