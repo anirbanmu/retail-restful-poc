@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://redsky.target.com/v2/pdp/tcin/not_a_real_id?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - redsky.target.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      X-Redsky-Trace-Id:
+      - d9df09a4db66dbc3
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET
+      Access-Control-Allow-Headers:
+      - X-Auth-Token, Content-Type, X-Requested-With
+      X-Response-Time:
+      - '0.00000'
+      Server:
+      - RedSky-V
+      Strict-Transport-Security:
+      - max-age=0
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Vary:
+      - Accept-Encoding
+      Date:
+      - Thu, 01 Feb 2018 20:33:51 GMT
+      Content-Length:
+      - '99'
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"product":{"item":{"error_message":"tcin improperly formatted: not_a_real_id","status_code":400}}}'
+    http_version: 
+  recorded_at: Thu, 01 Feb 2018 20:33:51 GMT
+recorded_with: VCR 4.0.0
