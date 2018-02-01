@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Product do
+RSpec.describe Product do
   before(:each) { $redis_raw.flushdb }
   after(:each) { $redis_raw.flushdb }
 
@@ -67,8 +67,9 @@ describe Product do
         expect{ save_result = product.save }.to change{ $redis_raw.dbsize }.by(1)
         expect(save_result).to be true
 
-        expect($redis.hmget(product.id, 'price').first).to eq(product.price)
-        expect($redis.hmget(product.id, 'currency').first).to eq(product.currency)
+        redis_key = Product.generate_redis_key(product.id)
+        expect($redis.hmget(redis_key, 'price').first).to eq(product.price.to_s)
+        expect($redis.hmget(redis_key, 'currency').first).to eq(product.currency)
       end
     end
 
@@ -82,23 +83,12 @@ describe Product do
     end
   end
 
-  describe '#exists?' do
-    it 'returns false when no record exists' do
-      expect(build(:product).exists?).to be false
-    end
-
-    it 'returns true when record exists' do
-      $redis.set("1", "")
-      expect(build(:product, id: "1").exists?).to be true
-    end
-  end
-
   describe '#destroy' do
     context 'when record exists' do
       it 'deletes record and returns true' do
-        $redis.set("1", "")
+        $redis.set(Product.generate_redis_key(1), "")
         destroy_result = false
-        expect{ destroy_result = build(:product, id: "1").destroy }.to change{ $redis_raw.dbsize }.by(-1)
+        expect{ destroy_result = build(:product, id: 1).destroy }.to change{ $redis_raw.dbsize }.by(-1)
         expect(destroy_result).to be true
       end
     end
@@ -108,6 +98,38 @@ describe Product do
         destroy_result = true
         expect{ destroy_result = build(:product).destroy }.to_not change{ $redis_raw.dbsize }
         expect(destroy_result).to be false
+      end
+    end
+  end
+
+
+  describe '.exists?' do
+    it 'returns false when no record exists' do
+      expect(Product.exists?(1)).to be false
+    end
+
+    it 'returns true when record exists' do
+      $redis.set(Product.generate_redis_key(1), "")
+      expect(Product.exists?(1)).to be true
+    end
+  end
+
+  describe '.find' do
+    context 'when record exists' do
+      it 'returns new Product object with correct values' do
+        product_to_save = build(:product)
+        product_to_save.save
+
+        found = Product.find(product_to_save.id)
+        expect(found.id).to eq(product_to_save.id)
+        expect(found.price).to eq(product_to_save.price)
+        expect(found.currency).to eq(product_to_save.currency)
+      end
+    end
+
+    context 'when record does not exist' do
+      it 'returns nil' do
+        expect(Product.find(1)).to be nil
       end
     end
   end
