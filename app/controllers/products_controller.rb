@@ -1,3 +1,5 @@
+require "#{Rails.root}/lib/redsky_api"
+
 class ProductsController < ApplicationController
   before_action :validate_update_params, only: [:update]
   before_action :find_product
