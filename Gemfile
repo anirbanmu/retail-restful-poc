@@ -26,7 +26,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :test do
   gem "rspec-rails", "~> 3.7"
   gem "factory_bot", "~> 4.8"
-  gem "faker", "~> 1.8"
   gem "webmock", "~> 3.3"
   gem "vcr", "~> 4.0"
 end
