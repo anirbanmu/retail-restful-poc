@@ -56,7 +56,6 @@ This application is live @ https://desolate-gorge-89429.herokuapp.com as an exam
 - Rails (main application framework)
 - RSpec (testing framework)
 - factory_bot (creating adhoc model instances)
-- faker (generating fake data)
 - VCR (record & playback HTTP requests)
 - redis-namespace (provides an redis interface with a namespace prepended)
 - money (used to verify valid currency)
