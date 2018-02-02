@@ -28,6 +28,7 @@ RSpec.describe 'Products public API', :vcr, type: :request do
       it 'returns 404 when there is no record to update' do
         put update_product_path(1), params: { current_price: { value: 1, currency_code: 'USD' } }
         expect(response.code).to eq('404')
+        expect(json_body['errors']).to include(/not found/i)
       end
 
       it 'returns 400 when current_price is missing from payload' do
