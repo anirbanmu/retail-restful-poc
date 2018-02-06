@@ -28,6 +28,7 @@ group :test do
   gem "factory_bot", "~> 4.8"
   gem "webmock", "~> 3.3"
   gem "vcr", "~> 4.0"
+  gem "simplecov"
 end
 
 gem "redis-namespace", "~> 1.6"
